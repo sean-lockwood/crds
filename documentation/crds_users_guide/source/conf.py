@@ -24,8 +24,6 @@ import os
 import sphinx
 from distutils.version import LooseVersion
 
-import sphinx_astropy
-
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../../../crds'))
 
@@ -43,7 +41,7 @@ import crds
 extensions = [
     # 'numfig',
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
+    # 'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.inheritance_diagram',
@@ -322,11 +320,4 @@ latex_show_urls = 'True'
 # If false, no module index is generated.
 latex_domain_indices = True
 
-# Configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3/', None),
-    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None),
-    'matplotlib': ('http://matplotlib.org/', None),
-    # 'jwst': ('https://jwst-pipeline.readthedocs.io/en/latest/jwst/package_index.html', None),
-    }
+

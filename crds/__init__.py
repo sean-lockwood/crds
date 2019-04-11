@@ -13,19 +13,6 @@ warnings.filterwarnings(
 __version__ = "7.3.1"   # XXXX  see also ../setup.cfg
 __rationale__ = "JWST 2019 DMS-7.3 CRDS-7.3.1 development."
 
-__all__ = [
-    "getrecommendations",
-    "getreferences",
-    "get_pickled_mapping",
-    "get_symbolic_mapping",
-    "get_cached_mapping",
-    "get_context_name",
-    "asmapping",
-    "locate_mapping",
-    "locate_file",
-    "get_default_context",
-    ]
-
 # ============================================================================
 
 from .core import config   # module
@@ -65,7 +52,7 @@ def _alias_subpackage_module(subpkg, modules):
         globals()[module] = importlib.import_module(subpkg + "." + module)
         sys.modules["crds." + module] = sys.modules[subpkg + "." + module]
 
-_CORE_MODULES = [
+CORE_MODULES = [
     "pysh",
     "python23",
     "exceptions",
@@ -87,13 +74,13 @@ _CORE_MODULES = [
 ]
 
 # e.g. make crds.rmap importable same as crds.core.rmap reorganized code
-_alias_subpackage_module("crds.core", _CORE_MODULES)
+_alias_subpackage_module("crds.core", CORE_MODULES)
 
 # ============================================================================
 
 # e.g. python -m crds.newcontext now called as python -m crds.refactoring.newcontext
 
-_REFACTORING_MODULES = [
+REFACTORING_MODULES = [
     "checksum",
     "newcontext",
     "refactor",
@@ -101,13 +88,13 @@ _REFACTORING_MODULES = [
 ]
 
 # e.g. make crds.rmap importable same as crds.core.rmap reorganized code
-_alias_subpackage_module("crds.refactoring", _REFACTORING_MODULES)
+_alias_subpackage_module("crds.refactoring", REFACTORING_MODULES)
 
 # ============================================================================
 
 # e.g. python -m crds.uniqname now called as -m crds.refactoring.uniqname
 
-_MISC_MODULES = [
+MISC_MODULES = [
     "datalvl",               # external interface with pipelines
     "query_affected",        # external interface with pipelines
     "uniqname",              # external interface with submitters
@@ -117,7 +104,7 @@ _MISC_MODULES = [
 ]
 
 # e.g. make crds.rmap importable same as crds.core.rmap reorganized code
-_alias_subpackage_module("crds.misc", _MISC_MODULES)
+_alias_subpackage_module("crds.misc", MISC_MODULES)
 
 # ============================================================================
 
