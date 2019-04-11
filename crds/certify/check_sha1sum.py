@@ -4,7 +4,6 @@ the CRDS server.
 
 from crds import client
 from crds.core import utils, log
-from crds.core.exceptions import DuplicateSha1sumError
 
 def check_sha1sums(filepaths, observatory=None):
     """Given a list of filepaths which nominally will be submitted
@@ -19,8 +18,10 @@ def check_sha1sums(filepaths, observatory=None):
     """
     log.info("Checking local file sha1sums vs. CRDS server to identify files already in CRDS.")
     sha1sums = get_all_sha1sums(observatory)
+    errors = 0
     for filepath in filepaths:
-        check_sha1sum(filepath, sha1sums, observatory)
+        errors += check_sha1sum(filepath, sha1sums, observatory)
+    return errors
 
 def check_sha1sum(filepath, sha1sums=None, observatory=None):
     """Check to see if the sha1sum of `filepath` is identical to any
@@ -35,9 +36,11 @@ def check_sha1sum(filepath, sha1sums=None, observatory=None):
     log.verbose("Checking file", repr(filepath), "with sha1sum", repr(sha1sum),
                 "for duplication on CRDS server.")
     if sha1sum in sha1sums:
-        raise DuplicateSha1sumError("Submitted file", repr(filepath),
-                                    "is identical to existing CRDS file",
-                                    repr(sha1sums[sha1sum]))
+        log.error("Submitted file", repr(filepath),
+                  "is identical to existing CRDS file",
+                  repr(sha1sums[sha1sum]))
+        return 1
+    return 0
 
 def get_all_sha1sums(observatory=None):
     """Query the CRDS server for sha1sums for all existing files.
